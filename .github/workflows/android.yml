@@ -1,26 +1,15 @@
-name: Android CI
-
-on:
-  push:
-    branches: [ "github-actions" ]
-  pull_request:
-    branches: [ "github-actions" ]
+on: [push]
 
 jobs:
-  build:
-
+  hello_world_job:
     runs-on: ubuntu-latest
-
+    name: A job to say hello
     steps:
-    - uses: actions/checkout@v3
-    - name: set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: gradle
-
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew assembleRelease
+      - name: Hello world action step
+        id: hello
+        uses: actions/hello-world-docker-action@v2
+        with:
+          who-to-greet: 'Mona the Octocat'
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
